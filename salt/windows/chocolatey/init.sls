@@ -1,0 +1,2 @@
+include:
+  - windows.chocolatey.install
