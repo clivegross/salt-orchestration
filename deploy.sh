@@ -116,6 +116,22 @@ deploy_pillar() {
     log_success "Pillar data deployed to $TARGET_PILLAR_DIR"
 }
 
+deploy_master_d_configs() {
+    local SRC_DIR="${SCRIPT_DIR}/config/master.d"
+    local DEST_DIR="${SALT_CONFIG_DIR}/master.d"
+
+    if [ -d "$SRC_DIR" ]; then
+        log_info "Deploying master.d configurations from $SRC_DIR to $DEST_DIR..."
+        mkdir -p "$DEST_DIR"
+        cp -r "$SRC_DIR"/* "$DEST_DIR/"
+        chown -R root:root "$DEST_DIR"
+        chmod -R 755 "$DEST_DIR"
+        log_success "master.d configurations deployed"
+    else
+        log_warning "No config/master.d directory found, skipping master.d config deployment"
+    fi
+}
+
 update_master_config() {
     local master_config="$SALT_CONFIG_DIR/master"
     
@@ -243,6 +259,7 @@ main() {
     deploy_salt
     deploy_pillar
     update_master_config
+    deploy_master_d_configs
     validate_deployment
     restart_services
     show_summary
