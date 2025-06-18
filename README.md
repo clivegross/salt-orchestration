@@ -33,7 +33,7 @@ git clone git@github.com:clivegross/salt-orchestration.git
 cd salt-orchestration
 
 # Run the master bootstrap script
-sudo sh scripts/bootstrap/bootstrap-salt-master.sh
+sudo sh scripts/bootstrap/bootstrap-salt-master.sh -master <YOUR-MASTER-IP-ADDRESS-OR-HOSTNAME>
 
 # Deploy salt configurations
 sudo sh deploy.sh
@@ -87,7 +87,7 @@ sudo salt 'MINION-NAME*' state.apply -v
 sudo salt -G 'os:Windows' state.apply test=True
 ```
 
-Assign role `schneider-electric.ebo.v6.enterprise-server` to minion, verify and apply state:
+Example assign role `schneider-electric.ebo.v6.enterprise-server` to minion, verify and apply state:
 
 ```bash
 $ sudo salt 'WINSVR01-V' grains.setval roles schneider-electric.ebo.v6.enterprise-server
