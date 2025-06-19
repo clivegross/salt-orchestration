@@ -1,6 +1,7 @@
 base:
   "G@os_family:windows":
     - windows
+    - windows.install_dir
     - windows.chocolatey
     - windows.software
 
