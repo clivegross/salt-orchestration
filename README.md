@@ -77,7 +77,7 @@ sudo salt '*' test.ping             # Test connectivity
 
 The workflow for managing minions and applying state:
 
-1. Configure the different desired roles in `.sls` files in the `salt/roles` directory. Browse throught the `salt` state file directories to see sample roles already configured, eg `web-server` or `schneider-electric.ebo.v6.enterprise-server`. Update the `top.sls` file so the roles are defined.
+1. Configure the different desired roles in `.sls` files in the `salt/roles` directory. Browse throught the `salt` state file directories to see sample roles already configured, see [Roles](#roles). Update the `top.sls` file so the roles are defined.
 2. Assign roles to minions, see [Assign Roles](#assign-roles).
 3. Apply state to minions, see [Apply States](#apply-states).
 
@@ -193,23 +193,27 @@ sudo salt '*' state.apply pillar='{"environment": "production"}'
 
 ## Available States
 
+### Roles
+
+| Role                                           | Description                                                               |
+| ---------------------------------------------- | ------------------------------------------------------------------------- |
+| `devbox`                                       | Configures a Windows machine with essential developer tools and settings. |
+| `jumpbox`                                      | Sets up a secure intermediary host for accessing remote networks.         |
+| `web-server`                                   | Installs and configures a basic web server environment.                   |
+| `schneider-electric`                           | Prepares the system for Schneider Electric software deployments.          |
+| `schneider-electric.ebo.v6.enterprise-server`  | Installs and configures the EBO v6 Enterprise Server platform.            |
+| `schneider-electric.ebo.v6.enterprise-central` | Installs and configures the EBO v6 Enterprise Central platform.           |
+
 ### Windows States
 
-| State                         | Description                    |
-| ----------------------------- | ------------------------------ |
-| `windows.base`                | Basic Windows configuration    |
-| `windows.software.chocolatey` | Chocolatey package manager     |
-| `windows.software.notepad`    | Notepad++ installation         |
-| `windows.software.firefox`    | Firefox browser installation   |
-| `windows.config.registry`     | Registry settings management   |
-| `windows.config.services`     | Windows services configuration |
-
-### Common States
-
-| State               | Description                     |
-| ------------------- | ------------------------------- |
-| `common.monitoring` | Monitoring agent installation   |
-| `common.security`   | Security baseline configuration |
+| State                              | Description                           |
+| ---------------------------------- | ------------------------------------- |
+| `windows.base`                     | Basic Windows configuration           |
+| `windows.chocolatey`               | Chocolatey package manager            |
+| `windows.software.notepadplusplus` | Notepad++ installation                |
+| `windows.software.vscode`          | VS Code installation                  |
+| `windows.software.iis`             | Microsoft IIS web server installation |
+| `windows.config.bginfo`            | BGinfo tool deployment                |
 
 ## Deployment Scripts
 
@@ -220,7 +224,7 @@ sudo salt '*' state.apply pillar='{"environment": "production"}'
 
 ### Deployment Scripts
 
-- `scripts/deployment/deploy.sh` - Deploy latest configurations with backup
+- `deploy.sh` - Deploy latest configurations with backup
 - `scripts/deployment/backup.sh` - Backup current configurations
 - `scripts/deployment/rollback.sh` - Rollback to previous configuration
 
