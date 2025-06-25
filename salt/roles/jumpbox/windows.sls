@@ -1,0 +1,2 @@
+include:
+  - windows.software.ahk

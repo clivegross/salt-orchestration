@@ -73,7 +73,34 @@ sudo salt-key -a 'YOUR-MINION-ID'   # Accept YOUR-MINION-ID key
 sudo salt '*' test.ping             # Test connectivity
 ```
 
-### 4. Apply States
+### 4. Manage State
+
+The workflow for managing minions and applying state:
+
+1. Configure the different desired roles in `.sls` files in the `salt/roles` directory. Browse throught the `salt` state file directories to see sample roles already configured, eg `web-server` or `schneider-electric.ebo.v6.enterprise-server`. Update the `top.sls` file so the roles are defined.
+2. Assign roles to minions, see [Assign Roles](#assign-roles).
+3. Apply state to minions, see [Apply States](#apply-states).
+
+#### Assign Roles
+
+From the Master, you can view and modify roles to minions.
+
+View current assigned roles:
+
+```bash
+sudo salt 'WINSVR01-V' grains.get roles
+```
+
+Append roles to a minion:
+
+```bash
+salt 'WINSVR01-V' grains.append roles jumpbox
+salt 'WINSVR01-V' grains.append roles web-server
+```
+
+Then apply the updated state, see [Apply States](#apply-states).
+
+#### Apply States
 
 ```bash
 # Apply all states
@@ -87,7 +114,7 @@ sudo salt 'MINION-NAME*' state.apply -v
 sudo salt -G 'os:Windows' state.apply test=True
 ```
 
-Example assign role `schneider-electric.ebo.v6.enterprise-server` to minion, verify and apply state:
+Example assignment of role `schneider-electric.ebo.v6.enterprise-server` to minion `'WINSVR01-V'`, verify and apply state:
 
 ```bash
 $ sudo salt 'WINSVR01-V' grains.setval roles schneider-electric.ebo.v6.enterprise-server
@@ -104,6 +131,7 @@ WINSVR01-V:
         - roles.schneider-electric.ebo.v6.enterprise-server
 
 $ sudo salt 'WINSVR01-V' state.apply
+
 ```
 
 ## Project Structure
